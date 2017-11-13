@@ -1,2 +1,3 @@
 # LeetCode
-Programs for LeetCode
+Solutions for LeetCode
+
