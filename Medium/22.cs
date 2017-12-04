@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LeetCode
 {
-    public class Solution
+    public partial class Solution
     {
         public IList<string> GenerateParenthesis(int n)
         {
