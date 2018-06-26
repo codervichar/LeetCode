@@ -1,0 +1,90 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LeetCode
+{
+    partial class Solution
+    {
+        public int GetMin(int[,] dp, int i, int j, bool[] row, bool[] col, bool isMatch)
+        {
+            int top= Int32.MaxValue, left= Int32.MaxValue;
+
+            if ( i==0 && j!=0)
+            {
+               left = dp[i, j - 1];
+            }
+            else if( i!=0 && j==0)
+            {
+                top = dp[i - 1, j];
+            }
+            else if(i!= 0 && j!=0)
+            {
+                top = dp[i - 1, j];
+                left = dp[i, j - 1];
+            }
+            else if(i==0 && j==0)
+            {
+                return 0;
+            }
+
+            if(isMatch)
+            {
+                int val;
+                if (top == left && !(row[i] && col[j]))
+                {
+                    val = Math.Max(0, top - 1);
+                }
+                else if (top < left && col[j])
+                    val = top + 1;
+                else if (top < left && !col[j])
+                    val = Math.Max(0, top - 1);
+                else if (left < top && row[j])
+                    val = left + 1;
+                else if (left < top && col[j])
+                    return Math.Max(0, left - 1);
+            }
+            else
+            {
+                return Math.Min(top, left) + 1;
+            }
+
+            return Math.Min(top, left);
+        }
+
+        public int MinDistance(string word1, string word2)
+        {
+            word1 = " " + word1;
+            word2 = " " + word2;
+
+            int[,] dp = new int[word1.Length, word2.Length];
+            bool[] row = new bool[word1.Length];
+            bool[] col = new bool[word2.Length];
+
+            int last = 0;
+            for(int i=0;i<word1.Length;i++)
+            {
+                for(int j=0;j<word2.Length;j++)
+                {
+                    var response = GetMin(dp, i, j);
+
+                    if (word1[i] != word2[j] || (row[i] && col[j]))
+                    {
+                        dp[i, j] = response + 1;
+                    }
+                    else 
+                    {
+                        row[i] = true;
+                        col[j] = true;
+                        dp[i, j] = Math.Max(0, response - 1);
+                    }
+                    last = dp[i, j];
+                }
+            }
+
+            return last;
+        }
+    }
+}

@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LeetCode
+{
+    partial class Solution
+    {
+        
+
+        public int PathSumV3(TreeNode root, int sum)
+        {
+            int count = 0;
+
+            if (root == null || (root.left == null && root.right == null))
+                return count;
+
+            if (root.val != sum)
+                count = PathSumV3(root.left, sum - root.val) + PathSumV3(root.right, sum - root.val) + PathSumV3(root.left, sum) + PathSumV3(root.right, sum);
+            else
+                count = 1 + PathSumV3(root.left, sum - root.val) + PathSumV3(root.right, sum - root.val) + PathSumV3(root.left, sum) + PathSumV3(root.right, sum);
+
+            return count;
+
+        }
+    }
+}

@@ -21,19 +21,19 @@ namespace LeetCode.Easy
 
         public bool IsPerfectSquareV2(int num)
         {
-            int low = 0, high = num;
-            while(low < high)
+            int low = 1, high = num;
+            while(low <= high)
             {
-                int mid = low + ((high - low) / 2);
+                long mid = (low + high) / 2;
                 if (mid * mid == num)
                     return true;
                 else  if ( mid * mid < num )
                 {
-                    low = mid + 1;
+                    low = (int)mid + 1;
                 }
                 else
                 {
-                    high = mid;
+                    high = (int)mid-1;
                 }
             }
             return false;
